@@ -6,11 +6,6 @@
 <link rel="stylesheet" href="assets/main.css" type="text/css">
 <script type="text/javascript" src="assets/Winwheel.js"></script>
 <script src="assets/TweenMax.min.js"></script>
-<meta property="og:title" content="Ruleta Codelearn - Castelldefels/Gavà/Viladecans">
-<meta property="og:type" content="article">
-<meta property="og:url" content="http://cloudadmins.org/ruleta/">
-<meta property="og:image" content="http://cloudadmins.org/ruleta/logo_codelearn_negre.png">
-<meta property="og:description" content="Ruleta que et permet aconseguir premis de Codelearn després d'haver fer exercici a casa.">
 </head>
 <body>
 <div id="wheelogo" align="left">
@@ -23,18 +18,14 @@
         <tr>
             <td colspan="2" align="center">
                 <h1 style="background-color:#72b027; color:white">RULETA</h1>
-                <br>
                 <h1>Ruleta <b>Code<font color="#72b027">learn</font></b> - Castelldefels/Gavà/Viladecans</h1>
                 <h2><span style="color: DarkRed;">3 exercicis a casa, <u>no acumulable</u></span></h2>
-                <br>
                 <p>Escull la potència de la ruleta i fes clic a <b>SPIN</b></p>
-                <br>
             </td>
         </tr>
         <tr>
             <td>
                 <div class="power_controls">
-                    <br><br>
                     <table class="power" cellpadding="10" cellspacing="0">
                         <tr><th align="center">Potència</th></tr>
                         <tr><td width="78" align="center" id="pw3" onclick="powerSelected(3);">Alta</td></tr>
@@ -60,6 +51,7 @@
         </tr>
     </table>
 </div>
+
 <script>
 const segmentsSet1 = [
     { fillStyle: '#265213', text: '+400 punts', textFillStyle: '#FFFFFF', size: 20, textFontSize: 22 },
@@ -73,17 +65,19 @@ const segmentsSet1 = [
 ];
 
 const segmentsSet2 = [
-    { fillStyle: '#265213', text: '+800 punts', textFillStyle: '#FFFFFF', size: 20, textFontSize: 22 },
-    { fillStyle: '#3358ed', text: '+150 punts', textFillStyle: '#FFFFFF' },
-    { fillStyle: '#b02773', text: '+200 punts', textFillStyle: '#FFFFFF' },
-    { fillStyle: '#72b027', text: '+400 punts', textFillStyle: '#FFFFFF', size: 35 },
-    { fillStyle: '#b02773', text: '+200 punts', textFillStyle: '#FFFFFF' },
-    { fillStyle: '#ede433', text: '+300 punts' },
-    { fillStyle: '#b02773', text: '+200 punts', textFillStyle: '#FFFFFF' },
-    { fillStyle: '#3358ed', text: '+150 punts', textFillStyle: '#FFFFFF' }
+    { fillStyle: '#ff5733', text: 'Premi sorpresa' },
+    { fillStyle: '#33c1ff', text: '5 min extra' },
+    { fillStyle: '#33ff88', text: 'Recompensa dolça' },
+    { fillStyle: '#d633ff', text: 'Pista extra' },
+    { fillStyle: '#ffd433', text: 'Joc nou' },
+    { fillStyle: '#ff3333', text: 'Reptes especials' },
+    { fillStyle: '#33ffcc', text: 'Mini joc' },
+    { fillStyle: '#3399ff', text: 'Tria un premi' }
 ];
 
 let currentMode = 1;
+let wheelPower = 0;
+let wheelSpinning = false;
 
 let theWheel = new Winwheel({
     'numSegments': segmentsSet1.length,
@@ -101,11 +95,8 @@ let theWheel = new Winwheel({
     }
 });
 
-let wheelPower = 0;
-let wheelSpinning = false;
-
 function powerSelected(powerLevel) {
-    if (wheelSpinning == false) {
+    if (!wheelSpinning) {
         document.getElementById('pw1').className = "";
         document.getElementById('pw2').className = "";
         document.getElementById('pw3').className = "";
@@ -121,8 +112,8 @@ function powerSelected(powerLevel) {
 }
 
 function startSpin() {
-    if (wheelSpinning == false) {
-        theWheel.animation.spins = (wheelPower == 1) ? 3 : (wheelPower == 2) ? 8 : 15;
+    if (!wheelSpinning) {
+        theWheel.animation.spins = wheelPower === 1 ? 3 : wheelPower === 2 ? 8 : 15;
         document.getElementById('spin_button').src = "assets/spin_off.png";
         document.getElementById('spin_button').className = "";
         theWheel.startAnimation();
@@ -146,16 +137,14 @@ function alertPrize(indicatedSegment) {
 
 function toggleMode() {
     if (wheelSpinning) return alert('Has de parar la ruleta abans de canviar!');
-    currentMode = (currentMode === 1) ? 2 : 1;
-    const selectedSegments = (currentMode === 1) ? segmentsSet1 : segmentsSet2;
+    currentMode = currentMode === 1 ? 2 : 1;
+    const selectedSegments = currentMode === 1 ? segmentsSet1 : segmentsSet2;
     setWheelSegments(selectedSegments);
 }
 
 function setWheelSegments(segments) {
     theWheel.segments = [];
-    for (let i = 0; i < segments.length; i++) {
-        theWheel.segments.push(segments[i]);
-    }
+    segments.forEach(segment => theWheel.addSegment(segment));
     theWheel.numSegments = segments.length;
     theWheel.draw();
 }
