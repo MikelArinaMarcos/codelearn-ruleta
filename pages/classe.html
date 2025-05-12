@@ -29,7 +29,7 @@
                         <h1 style="background-color:#72b027; color:white">RULETA</h1>
                         <br>
                         <h1>Ruleta <b>Code<font color="#72b027">learn</font></b> - Castelldefels/Gavà/Viladecans</h1>
-                        <h2><span style="color: DarkRed;">3 exercicis a casa, <u>no acumulable</u></span></h2>
+                        <h2><span style="color: DarkRed;"><u>Condicions:</u> Bona feina a classe i bona actitut</span></h2>
                         <br>
                         <p>Escull la potència de la ruleta i fes clic a <b>SPIN</b></p>
                         <br>
@@ -82,7 +82,7 @@
     <script>
         // Create new wheel object specifying the parameters at creation time.
         let theWheel = new Winwheel({
-            'numSegments': 12,     // Specify number of segments.
+            'numSegments': 8,     // Specify number of segments.
             'outerRadius': 212,   // Set outer radius so wheel fits inside the background.
             'textFontSize': 24,    // Set font size as desired.
             'textAlignment': 'center',
@@ -95,19 +95,15 @@
                     { 'fillStyle': '#b02773', 'text': '+50 punts', 'textFillStyle': '#FFFFFF' },
                     { 'fillStyle': '#72b027', 'text': '+100 punts', 'textFillStyle': '#FFFFFF', 'size': 35 },
                     { 'fillStyle': '#b02773', 'text': '+50 punts', 'textFillStyle': '#FFFFFF' },
+                    { 'fillStyle': '#ede433', 'text': '+75 punts' },
                     { 'fillStyle': '#b02773', 'text': '+50 punts', 'textFillStyle': '#FFFFFF' },
-                    { 'fillStyle': '#b02773', 'text': '+50 punts', 'textFillStyle': '#FFFFFF' },
-                    { 'fillStyle': '#b02773', 'text': '+50 punts', 'textFillStyle': '#FFFFFF' },
-                    { 'fillStyle': '#b02773', 'text': '+50 punts', 'textFillStyle': '#FFFFFF' },
-                    { 'fillStyle': '#b02773', 'text': '+50 punts', 'textFillStyle': '#FFFFFF' },
-                    { 'fillStyle': '#b02773', 'text': '+50 punts', 'textFillStyle': '#FFFFFF' },
-                    { 'fillStyle': '#ede433', 'text': '+75 punts' }
+                    { 'fillStyle': '#3358ed', 'text': '+25 punts', 'textFillStyle': '#FFFFFF' }
                 ],
             'animation':           // Specify the animation to use.
             {
                 'type': 'spinToStop',
                 'duration': 5,     // Duration in seconds.
-                'spins': 12,     // Number of complete spins.
+                'spins': 8,     // Number of complete spins.
                 'callbackFinished': alertPrize
             }
         });

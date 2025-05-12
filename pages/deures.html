@@ -29,7 +29,7 @@
                         <h1 style="background-color:#72b027; color:white">RULETA</h1>
                         <br>
                         <h1>Ruleta <b>Code<font color="#72b027">learn</font></b> - Castelldefels/Gavà/Viladecans</h1>
-                        <h2><span style="color: DarkRed;">3 exercicis a casa, <u>no acumulable</u></span></h2>
+                        <h2><span style="color: DarkRed;">3 exercicis a casa, d'aventures principals, <u>no acumulable</u></span></h2>
                         <br>
                         <p>Escull la potència de la ruleta i fes clic a <b>SPIN</b></p>
                         <br>
@@ -140,7 +140,7 @@
                 wheelPower = powerLevel;
 
                 // Light up the spin button by changing it's source image and adding a clickable class to it.
-                document.getElementById('spin_button').src = "assets/spin_on.png";
+                document.getElementById('spin_button').src = "../assets/spin_on.png";
                 document.getElementById('spin_button').className = "clickable";
             }
         }
@@ -162,7 +162,7 @@
                 }
 
                 // Disable the spin button so can't click again while wheel is spinning.
-                document.getElementById('spin_button').src = "assets/spin_off.png";
+                document.getElementById('spin_button').src = "../assets/spin_off.png";
                 document.getElementById('spin_button').className = "";
 
                 // Begin the spin animation by calling startAnimation on the wheel object.
