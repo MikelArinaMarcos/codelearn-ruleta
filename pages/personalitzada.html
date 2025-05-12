@@ -1,81 +1,138 @@
-<!DOCTYPE html>
-<html lang="ca">
+<html xml:lang="ca" xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Ruleta Personalitzable</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/winwheel@2.7.0/dist/Winwheel.min.js"></script>
-    <style>
-        body { font-family: sans-serif; text-align: center; }
-        .option-input { margin: 5px 0; }
-    </style>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <title>Ruleta Codelearn</title>
+    <link rel="stylesheet" href="../assets/main.css" type="text/css">
+    <script type="text/javascript" src="../assets/Winwheel.js"></script>
+    <script src="../assets/TweenMax.min.js"></script>
+    <meta property="og:title" content="Ruleta Codelearn - Castelldefels/Gavà/Viladecans">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="http://cloudadmins.org/ruleta/">
+    <meta property="og:image" content="http://cloudadmins.org/ruleta/logo_codelearn_negre.png">
+    <meta property="og:description"
+        content="Ruleta que et permet aconseguir premis de Codelearn després d'haver fer exercici a casa.">
 </head>
+
 <body>
+    <div id="wheelogo" align="left">
+        <img src="../assets/codelearnlogo-fonblanc.jpg" width="400" height="125" alt="Logo">
+    </div>
 
-    <h1>Ruleta Personalitzable</h1>
+    <div align="center">
+        <h1 style="background-color:#72b027; color:white">RULETA PERSONALITZADA</h1>
 
-    <!-- Formulario para opciones -->
-    <form id="optionsForm">
-        <label for="numOptions">Número d'opcions:</label>
-        <input type="number" id="numOptions" name="numOptions" min="2" max="20" value="4">
-        <button type="button" onclick="generateOptionInputs()">Crear opcions</button>
-        <div id="optionsContainer"></div>
-        <button type="submit">Crear ruleta</button>
-    </form>
+        <form id="formRuleta" onsubmit="crearRuleta(event)">
+            <label>Nombre de opcions:</label>
+            <input type="number" id="numOpcions" min="2" max="20" value="8" required><br><br>
+            <div id="inputsOpcions"></div>
+            <button type="submit">Generar Ruleta</button>
+        </form>
 
-    <br><br>
+        <br><br>
 
-    <!-- Ruleta -->
-    <canvas id="canvas" width="500" height="500"></canvas><br>
-    <button onclick="startSpin()">SPIN</button>
-    <button onclick="resetWheel()">Reiniciar</button>
+        <div class="power_controls">
+            <table class="power" cellpadding="10" cellspacing="0">
+                <tr><th>Potència</th></tr>
+                <tr><td id="pw3" onclick="powerSelected(3);">Alta</td></tr>
+                <tr><td id="pw2" onclick="powerSelected(2);">Mitjana</td></tr>
+                <tr><td id="pw1" onclick="powerSelected(1);">Baixa</td></tr>
+            </table>
+            <br>
+            <img id="spin_button" src="../assets/spin_off.png" alt="Spin" onclick="startSpin();">
+            <br><br>
+            <a href="#" onclick="resetWheel(); return false;">Tornar a jugar</a>
+        </div>
+
+        <canvas id="canvas" width="434" height="434">
+            <p>El teu navegador no suporta canvas.</p>
+        </canvas>
+    </div>
+
+    <script src="../assets/Winwheel.js"></script>
+    <script src="../assets/TweenMax.min.js"></script>
 
     <script>
         let theWheel;
+        let wheelPower = 0;
+        let wheelSpinning = false;
 
-        function generateOptionInputs() {
-            const container = document.getElementById("optionsContainer");
-            const num = parseInt(document.getElementById("numOptions").value);
-            container.innerHTML = "";
+        // Crear campos de texto para cada opción
+        document.getElementById('numOpcions').addEventListener('input', function () {
+            const num = parseInt(this.value);
+            const container = document.getElementById('inputsOpcions');
+            container.innerHTML = '';
             for (let i = 0; i < num; i++) {
-                const input = document.createElement("input");
-                input.type = "text";
-                input.placeholder = "Opció " + (i + 1);
-                input.className = "option-input";
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = `Opció ${i + 1}`;
                 input.required = true;
+                input.name = 'opcio' + i;
                 container.appendChild(input);
-                container.appendChild(document.createElement("br"));
+                container.appendChild(document.createElement('br'));
+            }
+        });
+        // Inicializa con 8 campos por defecto
+        document.getElementById('numOpcions').dispatchEvent(new Event('input'));
+
+        // Crear la ruleta personalizada
+        function crearRuleta(e) {
+            e.preventDefault();
+            const inputs = document.querySelectorAll('#inputsOpcions input');
+            const segments = Array.from(inputs).map(input => ({
+                'fillStyle': getRandomColor(),
+                'text': input.value,
+                'textFillStyle': '#FFFFFF'
+            }));
+
+            theWheel = new Winwheel({
+                'numSegments': segments.length,
+                'outerRadius': 212,
+                'textFontSize': 20,
+                'textAlignment': 'center',
+                'innerRadius': 20,
+                'segments': segments,
+                'animation': {
+                    'type': 'spinToStop',
+                    'duration': 5,
+                    'spins': 8,
+                    'callbackFinished': alertPrize
+                }
+            });
+
+            // Activar botón de spin
+            document.getElementById('spin_button').src = "../assets/spin_off.png";
+            document.getElementById('spin_button').className = "";
+            wheelSpinning = false;
+        }
+
+        function powerSelected(powerLevel) {
+            if (!wheelSpinning) {
+                document.getElementById('pw1').className = "";
+                document.getElementById('pw2').className = "";
+                document.getElementById('pw3').className = "";
+
+                if (powerLevel >= 1) document.getElementById('pw1').className = "pw1";
+                if (powerLevel >= 2) document.getElementById('pw2').className = "pw2";
+                if (powerLevel >= 3) document.getElementById('pw3').className = "pw3";
+
+                wheelPower = powerLevel;
+                document.getElementById('spin_button').src = "../assets/spin_on.png";
+                document.getElementById('spin_button').className = "clickable";
             }
         }
 
-        document.getElementById("optionsForm").addEventListener("submit", function (e) {
-            e.preventDefault();
-            const inputs = document.querySelectorAll("#optionsContainer input");
-            const segments = Array.from(inputs).map((input, index) => {
-                const colors = ['#72b027', '#265213', '#3358ed', '#b02773', '#ede433'];
-                return {
-                    text: input.value,
-                    fillStyle: colors[index % colors.length],
-                    textFillStyle: '#FFFFFF'
-                };
-            });
-
-            theWheel = new Winwheel({
-                numSegments: segments.length,
-                outerRadius: 200,
-                textFontSize: 20,
-                segments: segments,
-                animation: {
-                    type: 'spinToStop',
-                    duration: 5,
-                    spins: 8,
-                    callbackFinished: alertPrize
-                }
-            });
-        });
-
         function startSpin() {
-            if (theWheel) theWheel.startAnimation();
+            if (!wheelSpinning && theWheel) {
+                if (wheelPower == 1) theWheel.animation.spins = 3;
+                else if (wheelPower == 2) theWheel.animation.spins = 8;
+                else if (wheelPower == 3) theWheel.animation.spins = 15;
+
+                document.getElementById('spin_button').src = "../assets/spin_off.png";
+                document.getElementById('spin_button').className = "";
+                theWheel.startAnimation();
+                wheelSpinning = true;
+            }
         }
 
         function resetWheel() {
@@ -84,15 +141,23 @@
                 theWheel.rotationAngle = 0;
                 theWheel.draw();
             }
+
+            document.getElementById('pw1').className = "";
+            document.getElementById('pw2').className = "";
+            document.getElementById('pw3').className = "";
+            wheelSpinning = false;
         }
 
         function alertPrize(indicatedSegment) {
             alert("Has guanyat: " + indicatedSegment.text + "!");
         }
 
-        // Inicializa con inputs por defecto
-        window.onload = generateOptionInputs;
+        function getRandomColor() {
+            const colors = ['#265213', '#b02773', '#3358ed', '#72b027', '#ede433'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
     </script>
-
 </body>
+
+
 </html>
