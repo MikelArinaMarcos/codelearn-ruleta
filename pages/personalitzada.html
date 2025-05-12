@@ -21,6 +21,8 @@
 
     <div align="center">
         <h1 style="background-color:#72b027; color:white">RULETA PERSONALITZADA</h1>
+        <br>
+        <p>Escull la potència de la ruleta i fes clic a <b>SPIN</b></p>
 
         <form id="formRuleta" onsubmit="crearRuleta(event)">
             <label>Nombre de opcions:</label>
@@ -32,11 +34,12 @@
         <br><br>
 
         <div class="power_controls">
+            <br><br>
             <table class="power" cellpadding="10" cellspacing="0">
-                <tr><th>Potència</th></tr>
-                <tr><td id="pw3" onclick="powerSelected(3);">Alta</td></tr>
-                <tr><td id="pw2" onclick="powerSelected(2);">Mitjana</td></tr>
-                <tr><td id="pw1" onclick="powerSelected(1);">Baixa</td></tr>
+                <tr><th align="center">Potència</th></tr>
+                <tr><td width="78" align="center" id="pw3" onclick="powerSelected(3);">Alta</td></tr>
+                <tr><td align="center" id="pw2" onclick="powerSelected(2);">Mitjana</td></tr>
+                <tr><td align="center" id="pw1" onclick="powerSelected(1);">Baixa</td></tr>
             </table>
             <br>
             <img id="spin_button" src="../assets/spin_off.png" alt="Spin" onclick="startSpin();">
