@@ -10,8 +10,34 @@
     <meta property="og:type" content="article">
     <meta property="og:url" content="http://cloudadmins.org/ruleta/">
     <meta property="og:image" content="http://cloudadmins.org/ruleta/logo_codelearn_negre.png">
-    <meta property="og:description"
-        content="Ruleta que et permet aconseguir premis de Codelearn després d'haver fer exercici a casa.">
+    <meta property="og:description" content="Ruleta que et permet aconseguir premis de Codelearn després d'haver fer exercici a casa.">
+    <style>
+        h1 {
+            background-color: #72b027;
+            color: white;
+            padding: 20px;
+        }
+
+        .button-container {
+            margin-top: 40px;
+        }
+
+        .boton {
+            background-color: #72b027;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            margin: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .boton:hover {
+            background-color: #5e921f;
+        }
+    </style>
 </head>
 <body>
     <div id="wheelogo" align="left">
@@ -20,9 +46,11 @@
     <br><br>
 
     <div align="center">
-        <h1 style="background-color:#72b027; color:white">RULETA CODELEARN</h1>
-        <button onclick="window.location.href='https://mikelarinamarcos.github.io/codelearn-ruleta/pages/deberes.html'">Ir a Deberes</button>
-        <button onclick="window.location.href='https://mikelarinamarcos.github.io/codelearn-ruleta/pages/clase.html'">Ir a Clase</button>
+        <h1>RULETA CODELEARN</h1>
+        <div class="button-container">
+            <button class="boton" onclick="window.location.href='https://mikelarinamarcos.github.io/codelearn-ruleta/pages/deberes.html'">Ir a Deberes</button>
+            <button class="boton" onclick="window.location.href='https://mikelarinamarcos.github.io/codelearn-ruleta/pages/clase.html'">Ir a Clase</button>
+        </div>
     </div>
 </body>
 </html>
