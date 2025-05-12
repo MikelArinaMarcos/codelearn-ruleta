@@ -72,6 +72,14 @@
                                 try another.</p>
                         </canvas>
                     </td>
+                    <td>
+                        <form id="formRuleta" onsubmit="crearRuleta(event)">
+                            <label>Nombre de opcions:</label>
+                            <input type="number" id="numOpcions" min="2" max="20" value="8" required><br><br>
+                            <div id="inputsOpcions"></div>
+                            <button type="submit">Generar Ruleta</button>
+                        </form>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="2">
