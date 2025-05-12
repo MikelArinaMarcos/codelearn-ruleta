@@ -20,9 +20,16 @@
     </div>
 
     <div align="center">
-        <h1 style="background-color:#72b027; color:white">RULETA PERSONALITZADA</h1>
-        <br>
-        <p>Escull la potència de la ruleta i fes clic a <b>SPIN</b></p>
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tbody>
+                <tr>
+                    <td colspan="2" align="center">
+                        <h1 style="background-color:#72b027; color:white">RULETA PERSONALITZADA</h1>
+                        <br>
+                        <p>Escull la potència de la ruleta i fes clic a <b>SPIN</b></p>
+                    </td>
+                </tr>
+            </tbody>
 
         <form id="formRuleta" onsubmit="crearRuleta(event)">
             <label>Nombre de opcions:</label>
@@ -32,24 +39,38 @@
         </form>
 
         <br><br>
-
-        <div class="power_controls">
-            <br><br>
-            <table class="power" cellpadding="10" cellspacing="0">
-                <tr><th align="center">Potència</th></tr>
-                <tr><td width="78" align="center" id="pw3" onclick="powerSelected(3);">Alta</td></tr>
-                <tr><td align="center" id="pw2" onclick="powerSelected(2);">Mitjana</td></tr>
-                <tr><td align="center" id="pw1" onclick="powerSelected(1);">Baixa</td></tr>
-            </table>
-            <br>
-            <img id="spin_button" src="../assets/spin_off.png" alt="Spin" onclick="startSpin();">
-            <br><br>
-            <a href="#" onclick="resetWheel(); return false;">Tornar a jugar</a>
-        </div>
-
-        <canvas id="canvas" width="434" height="434">
-            <p>El teu navegador no suporta canvas.</p>
-        </canvas>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="power_controls">
+                            <br><br>
+                            <table class="power" cellpadding="10" cellspacing="0">
+                                <tbody>
+                                    <tr><th align="center">Potència</th></tr>
+                                    <tr><td width="78" align="center" id="pw3" onclick="powerSelected(3);">Alta</td></tr>
+                                    <tr><td align="center" id="pw2" onclick="powerSelected(2);">Mitjana</td></tr>
+                                    <tr><td align="center" id="pw1" onclick="powerSelected(1);">Baixa</td></tr>
+                                </tbody>
+                            </table>
+                            <br>
+                            <img id="spin_button" src="../assets/spin_off.png" alt="Spin" onclick="startSpin();">
+                            <br><br>
+                            <a href="#" onclick="resetWheel(); return false;">Tornar a jugar</a>
+                        </div>
+                    </td>
+                    <td width="438" height="582" class="the_wheel" align="center" valign="center">
+                        <canvas id="canvas" width="434" height="434">
+                            <p style="color: white" align="center">Sorry, your browser doesn't support canvas. Please try another.</p>
+                        </canvas>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <img src="../assets/display.bons.png" alt="Personatges">
+                    </td>
+                </tr>
+            </tbody>
+        </table>                
     </div>
 
     <script src="../assets/Winwheel.js"></script>
