@@ -112,8 +112,9 @@
         function crearRuleta(e) {
             e.preventDefault();
             const inputs = document.querySelectorAll('#inputsOpcions input');
-            const segments = Array.from(inputs).map(input => ({
-                'fillStyle': getRandomColor(),
+            const uniqueColors = getUniqueColors(inputs.length);
+            const segments = Array.from(inputs).map((input, index) => ({
+                'fillStyle': uniqueColors[index],
                 'text': input.value,
                 'textFillStyle': '#FFFFFF'
             }));
@@ -185,13 +186,15 @@
             alert("Has guanyat: " + indicatedSegment.text + "!");
         }
 
-        function getRandomColor() {
-            const letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
+        function getUniqueColors(count) {
+            const colors = new Set();
+
+            while (colors.size < count) {
+                const color = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+                colors.add(color);
             }
-            return color;
+
+            return Array.from(colors);
         }
     </script>
 </body>
